@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    //agent any
     environment {
         DEPLOY = "${env.BRANCH_NAME == "master" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
         NAME = "${env.BRANCH_NAME == "master" ? "example" : "example-staging"}"
@@ -19,12 +19,12 @@ pipeline {
         // -- This is an user defined variables
         AWS_ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
     }
-    //agent {
-    //    kubernetes {
-    //        defaultContainer 'jnlp'
-    //        yamlFile 'build.yaml'
-    //    }
-    //}
+    agent {
+        kubernetes {
+            defaultContainer 'jnlp'
+            yamlFile 'build.yaml'
+        }
+    }
     stages {
         stage('Build') {
             steps {
