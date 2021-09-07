@@ -6,6 +6,17 @@ pipeline {
         DOMAIN = 'localhost'
         REGISTRY = 'smvkumar/k8s-jenkins-example'
         REGISTRY_CREDENTIAL = 'muthu-dockerhub'
+        // -- These credentials should be set under Jenkins credentials
+        // -- Aws cli will take the credentials from the below environment
+        // -- variables to access aws resources
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_DEFAULT_REGION = credentials('AWS_DEFAULT_REGION')
+        // -- Set configfile to Kubectl configuration environment variable
+        // -- so that kubectl will take the cluster configuration from here
+        KUBECONFIG = credentials('AWS_EKS_KUBECONFIG_FILE')
+        // -- This is an user defined variables
+        AWS_ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
     }
     agent {
         kubernetes {
